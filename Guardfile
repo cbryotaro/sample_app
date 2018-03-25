@@ -1,7 +1,4 @@
-# Uncomment the following line on the cloud IDE. (Ignore the subsequent warning.)
-# notification :libnotify
-
-# Defines the matching rules for Guard.
+# Guardのマッチング規則を定義
 guard :minitest, spring: "bin/rails test", all_on_start: false do
   watch(%r{^test/(.*)/?(.*)_test\.rb$})
   watch('test/test_helper.rb') { 'test' }
@@ -38,21 +35,20 @@ guard :minitest, spring: "bin/rails test", all_on_start: false do
   end
 end
 
-# Returns the integration tests corresponding to the given resource.
+# 与えられたリソースに対応する統合テストを返す
 def integration_tests(resource = :all)
   if resource == :all
-    Dir["test/integration/*"]
-  else
+    Dir["test/integration/*"]  else
     Dir["test/integration/#{resource}_*.rb"]
   end
 end
 
-# Returns the controller tests corresponding to the given resource.
+# 与えられたリソースに対応するコントローラのテストを返す
 def controller_test(resource)
   "test/controllers/#{resource}_controller_test.rb"
 end
 
-# Returns all tests for the given resource.
+# 与えられたリソースに対応するすべてのテストを返す
 def resource_tests(resource)
   integration_tests(resource) << controller_test(resource)
 end
